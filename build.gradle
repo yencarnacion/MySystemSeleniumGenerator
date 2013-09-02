@@ -1,0 +1,21 @@
+apply plugin: 'groovy'
+
+version = 0.1
+sourceCompatibility = 1.6
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'driver.MySystemDriver'
+	}
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.0.7'
+    compile 'org.seleniumhq.selenium:selenium-server:2.35.0'
+    compile 'org.seleniumhq.selenium:selenium-java:2.35.0'
+}
