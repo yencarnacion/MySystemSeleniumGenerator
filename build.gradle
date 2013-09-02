@@ -4,10 +4,18 @@ version = 0.1
 sourceCompatibility = 1.6
 
 jar {
-	manifest {
-		attributes 'Main-Class': 'driver.MySystemDriver'
-	}
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+        attributes 'Main-Class': 'driver.MySystemDriver'
+    }
+    // adds runtime dependencies to jar package
+    doFirst {
+        from (configurations.runtime.resolve().collect { it.isDirectory() ? it : zipTree(it) }) {
+            exclude 'META-INF/MANIFEST.MF'
+            exclude 'META-INF/*.SF'
+            exclude 'META-INF/*.DSA'
+            exclude 'META-INF/*.RSA'
+        }
+    }
 }
 
 repositories {
